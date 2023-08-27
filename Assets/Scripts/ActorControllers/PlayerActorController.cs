@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerActorController : ActorController
 {
-    [SerializeField] private Canvas _lostGameCanvas;
+    [SerializeField] private GameObject _lostGameCanvas;
 
     protected override IEnumerator StartPlayGame()
     {
@@ -15,7 +15,7 @@ public class PlayerActorController : ActorController
     {
         if (_lostGameCanvas != null)
         {
-            _lostGameCanvas.gameObject.SetActive(true);
+            _lostGameCanvas.SetActive(true);
         }
     }
 }

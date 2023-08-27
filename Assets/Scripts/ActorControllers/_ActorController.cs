@@ -11,7 +11,7 @@ public abstract class ActorController : MonoBehaviour, IActorController
     [SerializeField] private UnityEvent _onTurnEnd;
 
 
-    private void Start()
+    private void Awake()
     {
         _gameActor.onActorTurnStart += _OnTurnStart;
         _gameActor.onActorTurnEnd += _OnTurnEnd;
@@ -26,8 +26,8 @@ public abstract class ActorController : MonoBehaviour, IActorController
 
     private void _OnTurnEnd()
     {
-        _onTurnEnd.Invoke();
         StopAllCoroutines();
+        _onTurnEnd.Invoke();
     }
 
     protected abstract void _OnDead(GameActor gameActor);

@@ -12,12 +12,13 @@ public class CardHolder : MonoBehaviour
     [SerializeField] private List<CardSO> _allCards = new List<CardSO>();
     [SerializeField] private GameObject _cardReference;
     [SerializeField] private int _maxActiveCards = 6;
-
+    [SerializeField] private List<CardSpot> _cardSpots;    
     [Space]
     [Header("Для проверки")]
 
     [SerializeField] private GameActor _owner = null;
     [SerializeField] private List<Card> _activeCardPool = new List<Card>();
+
 
     public void LoadOwner(GameActor owner)
     {
@@ -80,6 +81,13 @@ public class CardHolder : MonoBehaviour
 
     private void _UpdateActiveCardsPool()
     {
+        StopAllCoroutines();
+        StartCoroutine(_UpdateActiveCardsPoolCur());
+    }
+
+
+    private IEnumerator _UpdateActiveCardsPoolCur()
+    {
         int needCards = _maxActiveCards - _activeCardPool.Count;
 
         while (needCards > 0)
@@ -88,6 +96,7 @@ public class CardHolder : MonoBehaviour
             PlaceCardAtEmptySpace(newCard);
             _activeCardPool.Add(newCard);
             needCards--;
+            yield return new WaitForSeconds(0.1f);
         }
         onActivePoolUpdated?.Invoke();
     }
@@ -102,6 +111,16 @@ public class CardHolder : MonoBehaviour
 
     private void PlaceCardAtEmptySpace(Card card)
     {
-
+        var emptySpot = _cardSpots.Find(x => x.IsEmpty);
+        if(emptySpot == null)
+        {
+            Destroy(card);
+            return;
+        }
+        else
+        {
+            card.transform.position = emptySpot.transform.position;
+            emptySpot.PlaceCard(card);
+        }
     }
 }

@@ -14,6 +14,7 @@ public class GameBoard : MonoBehaviour
     [Space]
     [SerializeField] private int _maxActiveCards = 3;
     [SerializeField] private List<Card> _activeCards;
+    [SerializeField] private List<CardSpot> _activeCardsSlots;
     [Space]
     [SerializeField] private float _turnBetweenTimer = 2f;
 
@@ -68,6 +69,9 @@ public class GameBoard : MonoBehaviour
         card.SetTargets(targets);
 
         onActiveCardsUpdated?.Invoke();
+
+        _PlaceCardAtFreeSlot(card);
+
         return true;
     }
 
@@ -147,6 +151,14 @@ public class GameBoard : MonoBehaviour
             }
         }
     }
+
+
+    private void _PlaceCardAtFreeSlot(Card card)
+    {
+        var freeSlot = _activeCardsSlots.Find(x => x.IsEmpty);
+        freeSlot.PlaceCard(card);
+    }
+
 
     private IEnumerator NextTurnTimer()
     {

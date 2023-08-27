@@ -65,12 +65,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8843228049394603148, guid: 77d264738892c4990822dc571bc94ebc, type: 3}
-      propertyPath: _onDataLoaded.m_PersistentCalls.m_Calls.Array.size
+      propertyPath: _destroyOnActivate
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843228049394603148, guid: 77d264738892c4990822dc571bc94ebc, type: 3}
+      propertyPath: _onDataLoaded.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8843228049394603148, guid: 77d264738892c4990822dc571bc94ebc, type: 3}
+      propertyPath: _onDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 8843228049394603148, guid: 77d264738892c4990822dc571bc94ebc, type: 3}
       propertyPath: _onDataLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911213866270377366, guid: 77d264738892c4990822dc571bc94ebc, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8911213866270377366, guid: 77d264738892c4990822dc571bc94ebc, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

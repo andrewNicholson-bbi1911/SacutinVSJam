@@ -17,7 +17,6 @@ public class CardHolder : MonoBehaviour
     [SerializeField] private GameActor _owner = null;
     [SerializeField] private List<Card> _activeCardPool = new List<Card>();
 
-
     public void LoadOwner(GameActor owner)
     {
         if(_owner == null)

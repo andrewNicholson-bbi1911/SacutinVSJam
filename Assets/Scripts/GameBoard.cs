@@ -26,7 +26,7 @@ public class GameBoard : MonoBehaviour
         foreach(var actor in _actors)
         {
             actor.Init(this);
-            actor.onActorTurnEnd += _ActivateCards;
+            actor.onActorTurnEnd += _ActivateActiveCards;
             actor.onActorDead += _OnActorDead;
         }
     }
@@ -37,7 +37,7 @@ public class GameBoard : MonoBehaviour
         foreach (var actor in _actors)
         {
             actor.Init(this);
-            actor.onActorTurnEnd -= _ActivateCards;
+            actor.onActorTurnEnd -= _ActivateActiveCards;
             actor.onActorDead -= _OnActorDead;
         }
     }
@@ -82,7 +82,7 @@ public class GameBoard : MonoBehaviour
     }
 
 
-    private void _ActivateCards()
+    private void _ActivateActiveCards()
     {
         int maxTryies = 10 * _maxActiveCards;
         while(_activeCards.Count > 0)
@@ -104,6 +104,7 @@ public class GameBoard : MonoBehaviour
 
     public void NextTurn()
     {
+        StopAllCoroutines();
         _FinishTurn();
         _activeActorIndex++;
         _activeActorIndex %= _actors.Count;
@@ -113,8 +114,11 @@ public class GameBoard : MonoBehaviour
 
     private void _FinishTurn()
     {
-        _activeActor.EndTurn();
-        _activeActor = null;
+        if(_activeActor != null)
+        {
+            _activeActor.EndTurn();
+            _activeActor = null;
+        }
     }
 
 

@@ -14,6 +14,8 @@ public class GameActor : MonoBehaviour
 
 
     [SerializeField] private List<GameActor> _enemies = new List<GameActor>();
+    [SerializeField] private UnityEvent _onActorsTurnStart;
+    [SerializeField] private UnityEvent _onActorsTurnEnd;
 
     private CardHolder _cardHolder = null;
     private HPContainer _hpContainer = null;
@@ -36,6 +38,7 @@ public class GameActor : MonoBehaviour
         _cardHolder.LoadOwner(this);
         _hpContainer = GetComponent<HPContainer>();
         _hpContainer.onDead += _Die;
+        EndTurn();
     }
 
 
@@ -151,12 +154,14 @@ public class GameActor : MonoBehaviour
     public void EndTurn()
     {
         onActorTurnEnd?.Invoke();
+        _onActorsTurnEnd.Invoke();
         Debug.Log($"{this}>>>finished Turn");
     }
 
     public void StartTurn()
     {
         onActorTurnStart?.Invoke();
+        _onActorsTurnStart.Invoke();
         Debug.Log($"{this}>>>start Turn");
     }
 

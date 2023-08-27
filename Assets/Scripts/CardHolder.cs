@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class CardHolder : MonoBehaviour
 {
+    public int MaxActiveCards { get => _maxActiveCards; }
+
     public UnityAction onActivePoolUpdated;
 
     [SerializeField] private List<CardSO> _allCards = new List<CardSO>();

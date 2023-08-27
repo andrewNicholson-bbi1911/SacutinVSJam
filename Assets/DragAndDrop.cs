@@ -34,8 +34,9 @@ public class DragAndDrop : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("spoted");
         CardSpot newSpot;
         if (collision.TryGetComponent(out newSpot))
         {

@@ -7,11 +7,12 @@ using UnityEngine.Events;
 [RequireComponent(typeof(CardHolder), typeof(HPContainer))]
 public class GameActor : MonoBehaviour
 {
+    public int MaxCards { get => _cardHolder.MaxActiveCards; }
+
+
     public UnityAction onActorTurnStart;
     public UnityAction onActorTurnEnd;
     public UnityAction<GameActor> onActorDead;
-
-
 
     [SerializeField] private List<GameActor> _enemies = new List<GameActor>();
     [SerializeField] private UnityEvent _onActorsTurnStart;

@@ -50,6 +50,11 @@ public class GameBoard : MonoBehaviour
     }
 
 
+    public bool HasEmptySpace()
+    {
+        return _activeCards.Count < _maxActiveCards;
+    }
+
     public async Task<bool> TryPlaceCard(Card card)
     {
         if (_activeCards.Count >= _maxActiveCards)

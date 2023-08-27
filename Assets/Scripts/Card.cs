@@ -16,18 +16,43 @@ public class Card : MonoBehaviour
     [SerializeField] private GameActor _cardOwner;
     [SerializeField] private CardSO _cardSO;
     private List<GameActor> _targets = new List<GameActor>();
-    
+
+
+    public static Card SpawnNewCard(GameObject cardRefernce, CardSO cardData, GameActor holder)
+    {
+        var newCard = Instantiate(cardRefernce);
+        Card card;
+        if (newCard.TryGetComponent(out card))
+        {
+            card.LoadData(cardData, holder);
+            card.enabled = false;
+            return card;
+        }
+        else
+        {
+            Destroy(newCard);
+        }
+        return null;
+    }
+
 
     public void LoadData(CardSO cardSO, GameActor owner)
     {
+        
         _cardSO = cardSO;
         _cardOwner = owner;
+        _cardOwner.onActorTurnStart += _OpenCard;
+        _cardOwner.onActorTurnEnd += _CloseCard;
+
         _onDataLoaded.Invoke(_cardSO);
     }
 
 
     public async void QuickPlaceToGameBoard()
     {
+        if (!enabled)
+            return;
+
          Debug.LogError($"{this}>>> Тут расположен примерный алгоритм того, как надо выкладывать карту на стол." +
             $"\nНЕ ИСПОЛЬЗОВАТЬ В РЕАЛЬНОЙ ИГРЕ");
         _cardOwner.ReturnCardToHolder();
@@ -60,29 +85,26 @@ public class Card : MonoBehaviour
         _cardSO.ActivateCard(_cardOwner, _targets);
         if (_destroyOnActivate)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 1f);
         }
     }
 
 
-    public static Card SpawnNewCard(GameObject cardRefernce, CardSO cardData, GameActor holder)
+    private void OnDestroy()
     {
-        var newCard = Instantiate(cardRefernce);
-        Card card;
-        if(newCard.TryGetComponent(out card))
-        {
-            card.LoadData(cardData, holder);
-            return card;
-        }
-        else
-        {
-            Destroy(newCard);
-        }
-        return null;
+        _cardOwner.onActorTurnEnd -= _CloseCard;
+        _cardOwner.onActorTurnStart -= _OpenCard;
     }
 
-    private void _UpdateUI()
+
+    private void _CloseCard()
     {
-        Debug.LogError($"{this}>>> Here is no update logic");
+        enabled = false;
+    }
+
+
+    private void _OpenCard()
+    {
+        enabled = true;
     }
 }

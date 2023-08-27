@@ -7,8 +7,11 @@ public class DragAndDrop : MonoBehaviour
 {
     [SerializeField] private Camera _activeCamera;
 
-    [SerializeField] private CardSpot _activeSpot;
+    [SerializeField] private CardSpot _activeSpot = null;
 
+
+   
+    
     private void Awake()
     {
         _PlaceOnActiveSpot();
@@ -29,14 +32,22 @@ public class DragAndDrop : MonoBehaviour
 
     public void Drop()
     {
-        _PlaceOnActiveSpot();
-        Debug.Log("dropped");
+
+        if (_activeSpot != null && !_activeSpot.IsOccupied())
+        {
+            _PlaceOnActiveSpot();
+            _activeSpot.SetOccupied(true); // Устанавливаем флаг занятости спота
+            Debug.Log("Карта помещена на спот!");
+        }
+        else
+        {
+            Debug.Log("Карта не может быть размещена на споте.");
+        }
     }
 
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("spoted");
         CardSpot newSpot;
         if (collision.TryGetComponent(out newSpot))
         {
@@ -53,4 +64,4 @@ public class DragAndDrop : MonoBehaviour
 
         }
     }
-}
+ }

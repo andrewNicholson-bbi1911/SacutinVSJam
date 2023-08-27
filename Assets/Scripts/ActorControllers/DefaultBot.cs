@@ -2,14 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DefaultBot : ActorController
 {
+    [SerializeField] private UnityEvent _onDead; 
     [Space]
     [SerializeField] private RandomTimer _timeBetwiinMoves;
     [SerializeField] private int _maxMoveTries = 4;
     [Space]
     [SerializeField] private RandomTimer _timeBetweenActions;
+    
 
     protected override IEnumerator StartPlayGame()
     {
@@ -43,7 +46,7 @@ public class DefaultBot : ActorController
 
     protected override void _OnDead(GameActor gameActor)
     {
-        
+        _onDead.Invoke();
     }
 
     private bool _TryTakeRandomCard()

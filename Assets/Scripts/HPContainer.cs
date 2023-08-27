@@ -42,7 +42,7 @@ public class HPContainer : MonoBehaviour
             _currentHP = 0;
             _Die();
         }
-        _hpText.text = _currentHP.ToString();
+        _hpText.text = $"HP: {_currentHP}";
     }
 
     private void _Die()
